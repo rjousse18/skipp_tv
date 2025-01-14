@@ -3,7 +3,7 @@ name: Run Python Script
 on:
   push:
     branches:
-      - main # Déclenche l'action uniquement sur la branche "main" (modifiable selon vos besoins)
+      - main
 
 jobs:
   run-script:
@@ -42,8 +42,6 @@ jobs:
       - name: Create Release
         id: create_release
         uses: softprops/action-gh-release@v2
-        # env:
-        #   GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           name: "Release ${{ env.next_version }}"
           body: "This release contains the generated file."
@@ -52,13 +50,3 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           prerelease: false
           draft: false
-
-      # - name: Upload File to Release
-      #   uses: actions/upload-release-asset@v1
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #   with:
-      #     upload_url: ${{ env.sql_file }}
-      #     asset_path: ./insert_data.sql
-      #     asset_name: database.sql
-      #     asset_content_type: application/sql
