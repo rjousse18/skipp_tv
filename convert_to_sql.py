@@ -3,7 +3,7 @@ import csv
 # Fichier CSV source
 CSV_FILE = "data.csv"
 # Fichier SQL de sortie
-OUTPUT_SQL_FILE = "./server/sql/insert_data.sql"
+OUTPUT_SQL_FILE = "insert_data.sql"
 
 def create_table():
     query = """
