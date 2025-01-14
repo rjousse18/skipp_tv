@@ -11,25 +11,19 @@ jobs:
 
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v3 # Clone le dépôt
+        uses: actions/checkout@v3
         with:
-          fetch-depth: 0 # Assure la récupération des tags
+          fetch-depth: 0
 
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: "3.9" # Version de Python souhaitée
+          python-version: "3.9"
 
       - name: Run Script
         run: |
-          python convert_to_sql.py  # Remplacez "your_script.py" par le nom de votre script
-
-      - name: Debug tags
-        run: |
-          echo "All tags in the repository:"
-          git tag
-          echo "Latest tag based on git describe:"
-          git describe --tags $(git rev-list --tags --max-count=1) || echo "No tags found"
+          python convert_to_sql.py
+          echo "sql_file=insert_data.sql" >> $GITHUB_ENV
 
       - name: Get next version
         id: get_next_version
@@ -43,7 +37,6 @@ jobs:
           NEXT_VERSION="$MAJOR.$MINOR.$PATCH"
           echo "Next version: $NEXT_VERSION"
 
-          # Sortie de la version
           echo "next_version=$NEXT_VERSION" >> $GITHUB_ENV
 
       - name: Create Release
@@ -63,7 +56,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./insert_data.sql # Chemin vers le fichier généré
+          upload_url: ${{ env.sql_file }}
           asset_name: database.sql
-          asset_content_type: application/sql # Type MIME du fichier
+          asset_content_type: application/sql
