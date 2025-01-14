@@ -24,18 +24,19 @@ jobs:
 
       - name: Get Latest Tag
         id: get_latest_tag
-        run: echo $(git describe --tags $(git rev-list --tags --max-count=1)) && echo "LATEST_TAG=$(git describe --tags $(git rev-list --tags --max-count=1))" >> $GITHUB_ENV
+        run: echo "LATEST_TAG=$(git describe --tags $(git rev-list --tags --max-count=1))" >> $GITHUB_ENV
 
-      # - name: Calculate New Tag
-      #   id: calculate_tag
-      #   run: |
-      #     if [[ -z "${{ env.LATEST_TAG }}" ]]; then
-      #       echo "NEW_TAG=v0.0.1" >> $GITHUB_ENV
-      #     else
-      #       IFS='.' read -r MAJOR MINOR PATCH <<<"${{ env.LATEST_TAG }}"
-      #       PATCH=$((PATCH + 1))
-      #       echo "NEW_TAG=v${MAJOR}.${MINOR}.${PATCH}" >> $GITHUB_ENV
-      #     fi
+      - name: Calculate New Tag
+        id: calculate_tag
+        run: |
+          echo ${{ env.LATEST_TAG }}
+          if [[ -z "${{ env.LATEST_TAG }}" ]]; then
+            echo "NEW_TAG=v0.0.1" >> $GITHUB_ENV
+          else
+            IFS='.' read -r MAJOR MINOR PATCH <<<"${{ env.LATEST_TAG }}"
+            PATCH=$((PATCH + 1))
+            echo "NEW_TAG=v${MAJOR}.${MINOR}.${PATCH}" >> $GITHUB_ENV
+          fi
 
       - name: Create Release
         id: create_release
