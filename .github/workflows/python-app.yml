@@ -22,20 +22,20 @@ jobs:
         run: |
           python convert_to_sql.py  # Remplacez "your_script.py" par le nom de votre script
 
-      - name: Get Latest Tag
-        id: get_latest_tag
-        run: echo "LATEST_TAG=$(git describe --tags $(git rev-list --tags --max-count=1))" >> $GITHUB_ENV
+      # - name: Get Latest Tag
+      #   id: get_latest_tag
+      #   run: echo "LATEST_TAG=$(git describe --tags $(git rev-list --tags --max-count=1))" >> $GITHUB_ENV
 
-      - name: Calculate New Tag
-        id: calculate_tag
-        run: |
-          if [[ -z "${{ env.LATEST_TAG }}" ]]; then
-            echo "NEW_TAG=v0.0.1" >> $GITHUB_ENV
-          else
-            IFS='.' read -r MAJOR MINOR PATCH <<<"${{ env.LATEST_TAG }}"
-            PATCH=$((PATCH + 1))
-            echo "NEW_TAG=v${MAJOR}.${MINOR}.${PATCH}" >> $GITHUB_ENV
-          fi
+      # - name: Calculate New Tag
+      #   id: calculate_tag
+      #   run: |
+      #     if [[ -z "${{ env.LATEST_TAG }}" ]]; then
+      #       echo "NEW_TAG=v0.0.1" >> $GITHUB_ENV
+      #     else
+      #       IFS='.' read -r MAJOR MINOR PATCH <<<"${{ env.LATEST_TAG }}"
+      #       PATCH=$((PATCH + 1))
+      #       echo "NEW_TAG=v${MAJOR}.${MINOR}.${PATCH}" >> $GITHUB_ENV
+      #     fi
 
       - name: Create Release
         id: create_release
@@ -43,8 +43,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ env.NEW_TAG }}
-          release_name: "Release ${{ env.NEW_TAG }}"
+          tag_name: 0.0.5
+          release_name: "Release 0.0.5"
           body: "This release contains the generated file."
           draft: false
           prerelease: false
