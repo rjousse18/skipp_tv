@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - main # Déclenche l'action uniquement sur la branche "main" (modifiable selon vos besoins)
+    tags:
+      - v*
 
 jobs:
   run-script:
@@ -22,30 +24,14 @@ jobs:
         run: |
           python convert_to_sql.py  # Remplacez "your_script.py" par le nom de votre script
 
-      - name: Get Latest Tag
-        id: get_latest_tag
-        run: echo "LATEST_TAG=$(git describe --tags $(git rev-list --tags --max-count=1))" >> $GITHUB_ENV
-
-      - name: Calculate New Tag
-        id: calculate_tag
-        run: |
-          echo ${{ env.LATEST_TAG }}
-          if [[ -z "${{ env.LATEST_TAG }}" ]]; then
-            echo "NEW_TAG=v0.0.1" >> $GITHUB_ENV
-          else
-            IFS='.' read -r MAJOR MINOR PATCH <<<"${{ env.LATEST_TAG }}"
-            PATCH=$((PATCH + 1))
-            echo "NEW_TAG=v${MAJOR}.${MINOR}.${PATCH}" >> $GITHUB_ENV
-          fi
-
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: 0.0.5
-          release_name: "Release 0.0.5"
+          tag_name: ${{ github.ref }}
+          release_name: "Release ${{ github.ref }}"
           body: "This release contains the generated file."
           draft: false
           prerelease: false
