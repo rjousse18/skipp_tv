@@ -1,9 +1,10 @@
 # skipp_tv
-SkippTV is an API that stores TV show episodes and their intro timestamps.
+
+SkippTV is an API that stores TV show episodes and their intro's / outro's timecodes.
 
 # How it works
 
-Users can retrieve intro / outro timestamp with the endpoint planned for this purpose. Users can identify a tv show episode with his tmdbid, imdbid or title (formated as the_title_SXX_EXX)
+Users can retrieve intro / outro timecode with the endpoint planned for this purpose. Users can identify a tv show episode with his tmdbid, imdbid or title (formated as the_title_SXX_EXX)
 
 # What endpoints ?
 
@@ -25,11 +26,12 @@ Optional informations are (in order) : outro_start_at, outro_end_at
 Title must be correctly formated like this examples :
 
 Valid Examples :
+
 - ✅ game_of_thrones_S02_E05
 - ✅ silo_S01_E01
 - ✅ orange_is_the_new_black_S10_E54
 - ✅ one_piece_S01_E254
-Invalid Examples :
+  Invalid Examples :
 - ❌ Game_of_thrones_S02_E05 (capital letters in title)
 - ❌ game_of_thrones_s02_e05 (no capital letters for S and E)
 - ❌ game-of-thrones_S02_E05 (dash and not underscore)
@@ -39,9 +41,11 @@ Invalid Examples :
 Timecode must be correctly formatted as HH:mm:ss
 
 Valid Examples :
+
 - ✅ 00:15:46
 - ✅ 01:00:02
 
 Invalid Examples :
+
 - ❌ 45:00:89
 - ❌ 00:78:00
