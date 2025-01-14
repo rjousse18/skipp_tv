@@ -1,0 +1,23 @@
+name: Run Python Script
+
+on:
+  push:
+    branches:
+      - main  # Déclenche l'action uniquement sur la branche "main" (modifiable selon vos besoins)
+
+jobs:
+  run-script:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3  # Clone le dépôt
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'  # Version de Python souhaitée
+
+      - name: Run Script
+        run: |
+          python your_script.py  # Remplacez "your_script.py" par le nom de votre script
