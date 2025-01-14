@@ -22,9 +22,9 @@ jobs:
         run: |
           python convert_to_sql.py  # Remplacez "your_script.py" par le nom de votre script
 
-      # - name: Get Latest Tag
-      #   id: get_latest_tag
-      #   run: echo "LATEST_TAG=$(git describe --tags $(git rev-list --tags --max-count=1))" >> $GITHUB_ENV
+      - name: Get Latest Tag
+        id: get_latest_tag
+        run: echo $(git describe --tags $(git rev-list --tags --max-count=1)) && echo "LATEST_TAG=$(git describe --tags $(git rev-list --tags --max-count=1))" >> $GITHUB_ENV
 
       # - name: Calculate New Tag
       #   id: calculate_tag
