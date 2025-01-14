@@ -3,7 +3,7 @@ name: Run Python Script
 on:
   push:
     branches:
-      - main  # Déclenche l'action uniquement sur la branche "main" (modifiable selon vos besoins)
+      - main # Déclenche l'action uniquement sur la branche "main" (modifiable selon vos besoins)
 
 jobs:
   run-script:
@@ -11,12 +11,12 @@ jobs:
 
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v3  # Clone le dépôt
+        uses: actions/checkout@v3 # Clone le dépôt
 
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.9'  # Version de Python souhaitée
+          python-version: "3.9" # Version de Python souhaitée
 
       - name: Run Script
         run: |
@@ -30,9 +30,9 @@ jobs:
         id: calculate_tag
         run: |
           if [[ -z "${{ env.LATEST_TAG }}" ]]; then
-            echo "NEW_TAG=v1.0.0" >> $GITHUB_ENV
+            echo "NEW_TAG=v0.0.1" >> $GITHUB_ENV
           else
-            IFS='.' read -r MAJOR MINOR PATCH <<<"${{ env.LATEST_TAG#v }}"
+            IFS='.' read -r MAJOR MINOR PATCH <<<"${{ env.LATEST_TAG }}"
             PATCH=$((PATCH + 1))
             echo "NEW_TAG=v${MAJOR}.${MINOR}.${PATCH}" >> $GITHUB_ENV
           fi
@@ -51,6 +51,6 @@ jobs:
         uses: actions/upload-release-asset@v1
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./insert_data.sql  # Chemin vers le fichier généré
+          asset_path: ./insert_data.sql # Chemin vers le fichier généré
           asset_name: database.sql
-          asset_content_type: application/sql  # Type MIME du fichier
+          asset_content_type: application/sql # Type MIME du fichier
