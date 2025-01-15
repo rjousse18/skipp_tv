@@ -7,7 +7,9 @@ OUTPUT_SQL_FILE = "insert_data.sql"
 
 def create_table():
     query = """
-    CREATE TABLE IF NOT EXISTS tv_show_data (
+    DROP TABLE IF EXISTS tv_show_data;
+
+    CREATE TABLE tv_show_data (
         id SERIAL PRIMARY KEY,
         tmdb_id INT NOT NULL,
         title VARCHAR(255) NOT NULL CHECK (title ~ '^[a-z0-9_]+_S\\d{2}_E\\d{2,3}$'),
