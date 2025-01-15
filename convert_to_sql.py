@@ -12,11 +12,12 @@ def create_table():
     CREATE TABLE tv_show_data (
         id SERIAL PRIMARY KEY,
         tmdb_id INT NOT NULL,
-        title VARCHAR(255) NOT NULL CHECK (title ~ '^[a-z0-9_]+_S\\d{2}_E\\d{2,3}$'),
+        title VARCHAR(255) NOT NULL,
         intro_start_at TIME NOT NULL,
         intro_end_at TIME NOT NULL,
         outro_start_at TIME,
-        outro_end_at TIME
+        outro_end_at TIME,
+	CONSTRAINT title_format_check CHECK (title ~ '^[a-z0-9_]+_S\\d{2}_E\\d{2,3}$')
     );
     """
     return query
